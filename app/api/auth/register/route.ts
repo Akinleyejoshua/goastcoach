@@ -8,7 +8,21 @@ export async function POST(request: NextRequest) {
     await connectionPromise;
 
     const body = await request.json();
-    const { fullName, sport, position, experienceLevel, email, password } = body;
+    const { 
+      fullName, 
+      sport, 
+      position, 
+      experienceLevel, 
+      email, 
+      password,
+      bio,
+      team,
+      trainingFrequency,
+      goals,
+      age,
+      height,
+      weight
+    } = body;
 
     if (!fullName || !sport || !position || !experienceLevel || !email || !password) {
       return NextResponse.json(
@@ -34,6 +48,13 @@ export async function POST(request: NextRequest) {
       experienceLevel,
       email,
       password: hashedPassword,
+      bio,
+      team,
+      trainingFrequency,
+      goals,
+      age,
+      height,
+      weight,
     });
 
     await user.save();
@@ -49,6 +70,13 @@ export async function POST(request: NextRequest) {
           position: user.position,
           experienceLevel: user.experienceLevel,
           email: user.email,
+          bio: user.bio,
+          team: user.team,
+          trainingFrequency: user.trainingFrequency,
+          goals: user.goals,
+          age: user.age,
+          height: user.height,
+          weight: user.weight,
         },
         token,
       },

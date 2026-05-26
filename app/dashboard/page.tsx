@@ -64,8 +64,8 @@ export default function UploadPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Upload Your Stance</h1>
-        <p className="text-gray-600 mt-1">
+        <h1 className="text-2xl font-bold text-foreground dark:text-foreground">Upload Your Stance</h1>
+        <p className="text-muted-foreground dark:text-muted-foreground mt-1">
           Upload a photo of your {user?.sport?.toLowerCase()} technique and get AI-powered coaching feedback.
         </p>
       </div>
@@ -74,8 +74,8 @@ export default function UploadPage() {
         {...getRootProps()}
         className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
           isDragActive
-            ? 'border-indigo-500 bg-indigo-50'
-            : 'border-gray-300 hover:border-indigo-400 hover:bg-gray-50'
+            ? 'border-indigo-500 dark:border-indigo-400 bg-indigo-50 dark:bg-indigo-900/20'
+            : 'border-input dark:border-input hover:border-indigo-400 dark:hover:border-indigo-400 hover:bg-secondary dark:hover:bg-secondary'
         }`}
       >
         <input {...getInputProps()} />
@@ -83,33 +83,33 @@ export default function UploadPage() {
           {uploading ? (
             <>
               <Loader2 className="w-16 h-16 text-indigo-600 animate-spin mb-4" />
-              <p className="text-lg font-medium text-gray-900">Analyzing your technique...</p>
-              <p className="text-gray-500">This may take a few seconds</p>
+              <p className="text-lg font-medium text-foreground dark:text-foreground">Analyzing your technique...</p>
+              <p className="text-muted-foreground dark:text-muted-foreground">This may take a few seconds</p>
             </>
           ) : (
             <>
-              <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                <Camera className="w-8 h-8 text-indigo-600" />
+              <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mb-4">
+                <Camera className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
               </div>
-              <p className="text-lg font-medium text-gray-900">
+              <p className="text-lg font-medium text-foreground dark:text-foreground">
                 {isDragActive ? 'Drop your photo here' : 'Drag & drop a photo, or click to select'}
               </p>
-              <p className="text-gray-500 mt-2">JPG or PNG, max 5MB</p>
+              <p className="text-muted-foreground dark:text-muted-foreground mt-2">JPG or PNG, max 5MB</p>
             </>
           )}
         </div>
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+        <div className="flex items-center gap-2 p-4 bg-destructive/10 dark:bg-destructive/20 border border-destructive/30 dark:border-destructive/50 text-destructive dark:text-destructive rounded-lg">
           <AlertCircle size={20} />
           <span>{error}</span>
         </div>
       )}
 
       {sessions.length > 0 && (
-        <div className="space-y-6 pt-8 border-t">
-          <h2 className="text-xl font-semibold text-gray-900">Latest Analysis</h2>
+        <div className="space-y-6 pt-8 border-t border-card-border dark:border-card-border">
+          <h2 className="text-xl font-semibold text-foreground dark:text-foreground">Latest Analysis</h2>
           <FeedbackCard session={sessions[0]} expanded />
         </div>
       )}

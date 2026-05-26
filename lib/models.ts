@@ -7,6 +7,14 @@ export const UserSchema = new Schema({
   experienceLevel: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  // Advanced profile fields
+  bio: { type: String, default: '' },
+  team: { type: String, default: '' },
+  trainingFrequency: { type: String, default: '' },
+  goals: { type: String, default: '' },
+  age: { type: Number },
+  height: { type: Number },
+  weight: { type: Number },
   createdAt: { type: Date, default: Date.now },
 });
 

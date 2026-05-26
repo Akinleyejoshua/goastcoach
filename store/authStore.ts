@@ -7,6 +7,14 @@ interface User {
   position: string;
   experienceLevel: string;
   email: string;
+  // Advanced profile fields (optional)
+  bio?: string;
+  team?: string;
+  trainingFrequency?: string;
+  goals?: string;
+  age?: number;
+  height?: number;
+  weight?: number;
 }
 
 interface AuthState {
