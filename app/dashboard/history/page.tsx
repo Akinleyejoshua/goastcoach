@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { History, ChevronDown, ChevronUp, AlertCircle } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useAppStore, type Session } from '@/store/appStore';

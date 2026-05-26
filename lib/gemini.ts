@@ -4,7 +4,7 @@ if (!GEMINI_API_KEY) {
   console.warn('GEMINI_API_KEY is not set. AI features will not work.');
 }
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
 
 export async function analyzeImage(imageBase64: string, userContext: {
   sport: string;
