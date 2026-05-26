@@ -1,10 +1,13 @@
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+import { GoogleGenerativeAI, Content, Part } from '@google/generative-ai';
+
+const GEMINI_API_KEY:any = process.env.GEMINI_API_KEY;
 
 if (!GEMINI_API_KEY) {
   console.warn('GEMINI_API_KEY is not set. AI features will not work.');
 }
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: 'gemini-3.5-flash' });
 
 export async function analyzeImage(imageBase64: string, userContext: {
   sport: string;
@@ -38,36 +41,16 @@ Focus on:
 - Provide actionable, beginner-friendly explanations if experience level is Beginner`;
 
   try {
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              { text: prompt },
-              {
-                inline_data: {
-                  mime_type: 'image/jpeg',
-                  data: imageBase64,
-                },
-              },
-            ],
-          },
-        ],
-      }),
-    });
+    const imagePart: Part = {
+      inlineData: {
+        data: imageBase64,
+        mimeType: 'image/jpeg',
+      },
+    };
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error?.message || 'Gemini API error');
-    }
-
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!text) {
-      throw new Error('No response from Gemini');
-    }
+    const result = await model.generateContent([prompt, imagePart]);
+    const response = await result.response;
+    const text = response.text();
 
     // Parse JSON from response (remove markdown if present)
     const jsonMatch = text.match(/```json\n?([\s\S]*?)\n?```/) || text.match(/{[\s\S]*}/);
@@ -104,21 +87,9 @@ User question: ${message}
 Provide a helpful, concise coaching response. Keep it practical and tailored to their level. If the question is about exercises or drills, give specific, actionable advice.`;
 
   try {
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error?.message || 'Gemini API error');
-    }
-
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not generate a response.';
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text() || 'Sorry, I could not generate a response.';
   } catch (error) {
     console.error('Gemini chat error:', error);
     throw error;
