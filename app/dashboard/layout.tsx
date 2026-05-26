@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
-import { Camera, History, LogOut, User as UserIcon, Menu, X } from 'lucide-react';
+import { Camera, History, LogOut, User as UserIcon, Menu, X, Activity } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -57,91 +57,91 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-royalblue"></div>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      {/* Premium Navbar */}
-      <nav className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="min-h-screen bg-background font-sans text-foreground">
+      {/* Premium Glassmorphic Navbar */}
+      <nav className="bg-background/80 backdrop-blur-md border-b border-card-border sticky top-0 z-50 transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-royalblue/10 dark:bg-royalblue/20 rounded-2xl flex items-center justify-center">
-                <span className="text-2xl"></span>
+            {/* Logo / Brand identity */}
+            <div className="flex items-center gap-3 group cursor-pointer" onClick={() => router.push('/dashboard')}>
+              <div className="w-9 h-9 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+                <Activity size={18} className="animate-pulse" />
               </div>
-              <span className="text-2xl font-semibold tracking-tight text-black dark:text-white">
+              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
                 Ghost Coach
               </span>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
-              <NavLink href="/dashboard" icon={<Camera size={20} />} label="New Upload" />
-              <NavLink href="/dashboard/history" icon={<History size={20} />} label="History" />
+            {/* Desktop Navigation Link Hub */}
+            <div className="hidden md:flex items-center gap-2">
+              <NavLink href="/dashboard" icon={<Camera size={18} />} label="New Upload" />
+              <NavLink href="/dashboard/history" icon={<History size={18} />} label="History" />
             </div>
 
-            {/* User Section - Desktop */}
-            <div className="hidden md:flex items-center gap-6">
-              <div className="flex items-center gap-3 text-sm">
-                <div className="w-8 h-8 bg-zinc-100 dark:bg-zinc-900 rounded-2xl flex items-center justify-center">
-                  <UserIcon size={18} className="text-royalblue" />
+            {/* User Profile Controls - Desktop */}
+            <div className="hidden md:flex items-center gap-4">
+              <div className="flex items-center gap-3 px-3 py-1.5 rounded-xl border border-card-border/60 bg-secondary/30">
+                <div className="w-7 h-7 bg-primary/10 text-primary rounded-lg flex items-center justify-center">
+                  <UserIcon size={15} />
                 </div>
-                <div className="text-right">
-                  <div className="font-medium text-black dark:text-white">{user.fullName}</div>
-                  <div className="text-xs text-zinc-500 dark:text-zinc-400">{user.position}</div>
+                <div className="text-left leading-none">
+                  <div className="font-semibold text-xs tracking-wide">{user.fullName}</div>
+                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{user.position}</span>
                 </div>
               </div>
 
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-500 transition-colors rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-muted-foreground hover:text-destructive border border-transparent hover:border-destructive/20 hover:bg-destructive/5 rounded-xl transition-all"
               >
-                <LogOut size={18} />
-                <span className="font-medium">Logout</span>
+                <LogOut size={16} />
+                <span>Logout</span>
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Action Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-2xl"
+              className="md:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition-colors"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Flyout Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+          <div className="md:hidden border-t border-card-border bg-card/95 backdrop-blur-lg animate-fadeIn">
             <div className="px-4 py-6 space-y-6">
-              <div className="flex flex-col gap-2">
-                <MobileNavLink href="/dashboard" icon={<Camera size={20} />} label="New Upload" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/dashboard/history" icon={<History size={20} />} label="History" onClick={() => setMobileMenuOpen(false)} />
+              <div className="flex flex-col gap-1.5">
+                <MobileNavLink href="/dashboard" icon={<Camera size={18} />} label="New Upload" onClick={() => setMobileMenuOpen(false)} />
+                <MobileNavLink href="/dashboard/history" icon={<History size={18} />} label="History" onClick={() => setMobileMenuOpen(false)} />
               </div>
 
-              <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800">
-                <div className="flex items-center gap-3 mb-6 px-3">
-                  <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-2xl flex items-center justify-center">
-                    <UserIcon size={22} className="text-royalblue" />
+              <div className="pt-5 border-t border-card-border">
+                <div className="flex items-center gap-3 mb-5 px-3">
+                  <div className="w-9 h-9 bg-secondary text-primary border border-card-border rounded-xl flex items-center justify-center">
+                    <UserIcon size={18} />
                   </div>
                   <div>
-                    <div className="font-medium text-black dark:text-white">{user.fullName}</div>
-                    <div className="text-sm text-zinc-500 dark:text-zinc-400">{user.position}</div>
+                    <div className="font-bold text-sm text-foreground">{user.fullName}</div>
+                    <div className="text-xs text-muted-foreground">{user.position}</div>
                   </div>
                 </div>
 
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-3 py-4 text-red-600 dark:text-red-500 font-medium rounded-2xl hover:bg-red-50 dark:hover:bg-red-950/50"
+                  className="w-full flex items-center justify-center gap-2.5 py-3 text-sm font-semibold text-destructive border border-destructive/20 bg-destructive/5 hover:bg-destructive/10 rounded-xl transition-all"
                 >
-                  <LogOut size={20} />
+                  <LogOut size={16} />
                   Logout
                 </button>
               </div>
@@ -150,7 +150,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         )}
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      {/* Main Container */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn">
         {children}
       </main>
     </div>
@@ -165,14 +166,14 @@ function NavLink({ href, icon, label }: { href: string; icon: React.ReactNode; l
   return (
     <button
       onClick={() => router.push(href)}
-      className={`flex items-center gap-3 px-5 py-2.5 rounded-2xl text-sm font-medium transition-all
+      className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold tracking-tight transition-all
         ${isActive 
-          ? 'bg-royalblue text-white' 
-          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900'
+          ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10' 
+          : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
         }`}
     >
       {icon}
-      {label}
+      <span>{label}</span>
     </button>
   );
 }
@@ -193,14 +194,14 @@ function MobileNavLink({ href, icon, label, onClick }: {
         router.push(href);
         onClick();
       }}
-      className={`flex items-center gap-4 w-full px-5 py-4 rounded-2xl text-left text-base font-medium transition-all
+      className={`flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all
         ${isActive 
-          ? 'bg-royalblue text-white' 
-          : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900'
+          ? 'bg-primary text-primary-foreground' 
+          : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
         }`}
     >
       {icon}
-      {label}
+      <span>{label}</span>
     </button>
   );
 }
