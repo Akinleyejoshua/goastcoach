@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { Camera, History, LogOut, User as UserIcon } from 'lucide-react';
 
@@ -63,7 +63,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
 function NavLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   const router = useRouter();
-  const isActive = router.asPath === href;
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <button
