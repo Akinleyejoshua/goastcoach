@@ -117,7 +117,7 @@ export default function RegisterPage() {
                 <div key={s.num} className="flex items-center">
                   <div className="flex flex-col items-center">
                     <div
-                      className={`w-11 h-11 rounded-2xl flex items-center justify-center text-sm font-semibold transition-all duration-200
+                      className={`w-11 h-11 border border-zinc-300 dark:border-zinc-600 rounded-2xl flex items-center justify-center text-sm font-semibold transition-all duration-200
                         ${step >= s.num 
                           ? 'bg-royalblue' 
                           : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-400 dark:text-zinc-500'}`}
