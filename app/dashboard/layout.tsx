@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { Camera, History, LogOut, User as UserIcon } from 'lucide-react';
@@ -9,12 +9,49 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
+  const setUser = useAuthStore((s) => s.setUser);
+  const hasHydrated = useRef(false);
 
   useEffect(() => {
-    if (!user) {
-      router.push('/login');
+    const token = document.cookie.split('; ').find((row) => row.startsWith('auth-token='))?.split('=')[1];
+
+    // No token -> redirect to login
+    if (!token) {
+      if (!user) {
+        router.push('/login');
+      }
+      return;
     }
-  }, [user, router]);
+
+    // Already have user -> nothing to do
+    if (user) return;
+
+    // Prevent multiple hydration attempts
+    if (hasHydrated.current) return;
+    hasHydrated.current = true;
+
+    // Hydrate user from token
+    fetch('/api/auth/me', {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch user');
+        return res.json();
+      })
+      .then((data) => {
+        if (data.user) {
+          setUser(data.user);
+        } else {
+          // Invalid response -> clear cookie and redirect
+          document.cookie = 'auth-token=; path=/; max-age=0';
+          router.push('/login');
+        }
+      })
+      .catch(() => {
+        document.cookie = 'auth-token=; path=/; max-age=0';
+        router.push('/login');
+      });
+  }, [user, router, setUser]);
 
   const handleLogout = () => {
     document.cookie = 'auth-token=; path=/; max-age=0';
