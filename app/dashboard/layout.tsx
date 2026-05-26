@@ -62,43 +62,38 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background dark:bg-background">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background dark:bg-background">
-      <nav className="bg-card border-b border-card-border sticky top-0 z-10">
+      <nav className="bg-card dark:bg-card shadow-sm border-b border-card-border dark:border-card-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <span className="text-xl font-bold text-foreground tracking-tight mr-8">Ghost Coach</span>
-              <div className="hidden sm:flex space-x-2">
+              <span className="text-xl font-bold text-foreground dark:text-foreground mr-8">Ghost Coach</span>
+              <div className="flex space-x-4">
                 <NavLink href="/dashboard" icon={<Camera size={18} />} label="New Upload" />
                 <NavLink href="/dashboard/history" icon={<History size={18} />} label="History" />
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="hidden sm:flex items-center space-x-2 text-foreground">
+              <div className="flex items-center space-x-2 text-foreground dark:text-foreground">
                 <UserIcon size={18} />
-                <span className="font-medium">{user.fullName}</span>
-                <span className="text-sm text-muted-foreground">({user.position})</span>
+                <span>{user.fullName}</span>
+                <span className="text-sm text-muted-foreground dark:text-muted-foreground">({user.position})</span>
               </div>
-              <button onClick={handleLogout} className="flex items-center space-x-1 text-muted-foreground hover:text-destructive transition-colors text-sm font-medium">
+              <button onClick={handleLogout} className="flex items-center space-x-1 text-muted-foreground dark:text-muted-foreground hover:text-destructive dark:hover:text-destructive transition-colors">
                 <LogOut size={18} />
-                <span className="hidden sm:inline">Logout</span>
+                <span>Logout</span>
               </button>
             </div>
           </div>
-          {/* Mobile navigation */}
-          <div className="sm:hidden pb-3 pt-1 flex space-x-2">
-            <NavLink href="/dashboard" icon={<Camera size={18} />} label="Upload" />
-            <NavLink href="/dashboard/history" icon={<History size={18} />} label="History" />
-          </div>
         </div>
       </nav>
-      <main className="max-w-7xl mx-auto py-6 md:py-10 px-4 sm:px-6 lg:px-8">{children}</main>
+      <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">{children}</main>
     </div>
   );
 }
@@ -111,10 +106,8 @@ function NavLink({ href, icon, label }: { href: string; icon: React.ReactNode; l
   return (
     <button
       onClick={() => router.push(href)}
-      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-all ${
-        isActive
-          ? 'bg-primary/10 text-primary font-medium'
-          : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+      className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+        isActive ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400' : 'text-muted-foreground dark:text-muted-foreground hover:bg-secondary dark:hover:bg-secondary'
       }`}
     >
       {icon}
