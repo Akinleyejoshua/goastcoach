@@ -119,7 +119,7 @@ export default function RegisterPage() {
                     <div
                       className={`w-11 h-11 rounded-2xl flex items-center justify-center text-sm font-semibold transition-all duration-200
                         ${step >= s.num 
-                          ? 'bg-royalblue text-white' 
+                          ? 'bg-royalblue' 
                           : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-400 dark:text-zinc-500'}`}
                     >
                       {step > s.num ? '✓' : s.num}
@@ -252,7 +252,7 @@ export default function RegisterPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-royalblue hover:bg-[#1E40AF] active:bg-[#1E3A8A] text-white 
+                  className="w-full text-black bg-royalblue hover:text-white hover:bg-[#1E40AF] active:bg-[#1E3A8A] 
                            font-semibold py-4 rounded-2xl text-base transition-all duration-200
                            shadow-lg shadow-royalblue/30 dark:shadow-royalblue/20"
                 >
@@ -339,8 +339,8 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-royalblue hover:bg-[#1E40AF] active:bg-[#1E3A8A] 
-                             text-white font-semibold py-4 rounded-2xl text-base
+                    className="flex-1 bg-royalblue hover:bg-[#1E40AF] hover:text-white active:bg-[#1E3A8A] 
+                             ont-semibold py-4 rounded-2xl text-base
                              transition-all duration-200 disabled:opacity-70 shadow-lg shadow-royalblue/30 dark:shadow-royalblue/20"
                   >
                     {loading ? (
