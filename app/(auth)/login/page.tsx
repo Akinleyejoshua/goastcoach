@@ -45,45 +45,48 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 p-4">
-      <div className="w-full max-w-md bg-card dark:bg-card rounded-2xl shadow-xl p-8 border border-card-border dark:border-card-border">
-        <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-foreground dark:text-foreground">Ghost Coach</h1>
-        <p className="text-muted-foreground dark:text-muted-foreground mt-2">AI-Powered Sports Coaching</p>
+    <div className="min-h-screen flex items-center justify-center bg-background dark:bg-background p-4">
+      <div className="w-full max-w-md bg-card dark:bg-card border border-card-border dark:border-card-border shadow-lg rounded-2xl p-8 md:p-10">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold text-foreground tracking-tight">Ghost Coach</h1>
+          <p className="text-muted-foreground mt-3 text-sm">AI-Powered Sports Coaching</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">Email</label>
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-sm font-semibold text-foreground">Email</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
+                id="email"
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 border border-input dark:border-input rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent bg-background dark:bg-background text-foreground dark:text-foreground"
+                className="w-full pl-12 pr-4 py-3.5 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground transition-all placeholder:text-muted-foreground/60"
                 placeholder="you@example.com"
                 required
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">Password</label>
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-sm font-semibold text-foreground">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
+              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
+                id="password"
                 type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-10 pr-12 py-3 border border-input dark:border-input rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent bg-background dark:bg-background text-foreground dark:text-foreground"
-                placeholder="••••••••"
+                className="w-full pl-12 pr-12 py-3.5 border border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-primary bg-background text-foreground transition-all placeholder:text-muted-foreground/60"
+                placeholder="Enter your password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground dark:text-muted-foreground"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -91,26 +94,29 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="p-3 bg-destructive/10 dark:bg-destructive/20 border border-destructive/30 dark:border-destructive/50 text-destructive dark:text-destructive rounded-lg text-sm">
-              {error}
+            <div className="p-4 bg-destructive/10 border border-destructive/30 text-destructive rounded-xl text-sm flex items-start gap-3">
+              <div className="w-2 h-2 bg-destructive rounded-full mt-1.5 flex-shrink-0" />
+              <span className="font-medium">{error}</span>
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
+            className="w-full py-3.5 bg-primary hover:bg-primary-hover text-primary-foreground font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <p className="text-center mt-6 text-muted-foreground dark:text-muted-foreground">
-          Don't have an account?{' '}
-          <a href="/register" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
-            Register
-          </a>
-        </p>
+        <div className="mt-8 pt-6 border-t border-card-border">
+          <p className="text-center text-muted-foreground text-sm">
+            Don't have an account?{' '}
+            <a href="/register" className="text-primary hover:text-primary-hover font-semibold transition-colors">
+              Register
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

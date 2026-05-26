@@ -63,53 +63,53 @@ export default function UploadPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground dark:text-foreground">Upload Your Stance</h1>
-        <p className="text-muted-foreground dark:text-muted-foreground mt-1">
+      <div className="max-w-3xl">
+        <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">Upload Your Stance</h1>
+        <p className="text-muted-foreground mt-2">
           Upload a photo of your {user?.sport?.toLowerCase()} technique and get AI-powered coaching feedback.
         </p>
       </div>
 
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-colors ${
+        className={`border-2 border-dashed rounded-2xl p-10 md:p-16 text-center cursor-pointer transition-all ${
           isDragActive
-            ? 'border-indigo-500 dark:border-indigo-400 bg-indigo-50 dark:bg-indigo-900/20'
-            : 'border-input dark:border-input hover:border-indigo-400 dark:hover:border-indigo-400 hover:bg-secondary dark:hover:bg-secondary'
+            ? 'border-primary bg-primary/5'
+            : 'border-input hover:border-primary/50 hover:bg-secondary'
         }`}
       >
         <input {...getInputProps()} />
         <div className="flex flex-col items-center">
           {uploading ? (
             <>
-              <Loader2 className="w-16 h-16 text-indigo-600 animate-spin mb-4" />
-              <p className="text-lg font-medium text-foreground dark:text-foreground">Analyzing your technique...</p>
-              <p className="text-muted-foreground dark:text-muted-foreground">This may take a few seconds</p>
+              <Loader2 className="w-16 h-16 text-primary animate-spin mb-5" />
+              <p className="text-lg font-medium text-foreground">Analyzing your technique...</p>
+              <p className="text-muted-foreground mt-1">This may take a few seconds</p>
             </>
           ) : (
             <>
-              <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mb-4">
-                <Camera className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
+                <Camera className="w-8 h-8 text-primary" />
               </div>
-              <p className="text-lg font-medium text-foreground dark:text-foreground">
+              <p className="text-lg font-medium text-foreground">
                 {isDragActive ? 'Drop your photo here' : 'Drag & drop a photo, or click to select'}
               </p>
-              <p className="text-muted-foreground dark:text-muted-foreground mt-2">JPG or PNG, max 5MB</p>
+              <p className="text-muted-foreground mt-2 text-sm">JPG or PNG, max 5MB</p>
             </>
           )}
         </div>
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 p-4 bg-destructive/10 dark:bg-destructive/20 border border-destructive/30 dark:border-destructive/50 text-destructive dark:text-destructive rounded-lg">
-          <AlertCircle size={20} />
+        <div className="flex items-start gap-3 p-4 bg-destructive/10 border border-destructive/30 text-destructive rounded-xl">
+          <AlertCircle size={20} className="flex-shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
       )}
 
       {sessions.length > 0 && (
-        <div className="space-y-6 pt-8 border-t border-card-border dark:border-card-border">
-          <h2 className="text-xl font-semibold text-foreground dark:text-foreground">Latest Analysis</h2>
+        <div className="space-y-6 pt-8 border-t border-card-border">
+          <h2 className="text-xl font-semibold text-foreground">Latest Analysis</h2>
           <FeedbackCard session={sessions[0]} expanded />
         </div>
       )}
