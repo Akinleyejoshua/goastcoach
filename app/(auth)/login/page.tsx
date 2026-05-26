@@ -45,71 +45,122 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 p-4">
-      <div className="w-full max-w-md bg-card dark:bg-card rounded-2xl shadow-xl p-8 border border-card-border dark:border-card-border">
-        <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-foreground dark:text-foreground">Ghost Coach</h1>
-        <p className="text-muted-foreground dark:text-muted-foreground mt-2">AI-Powered Sports Coaching</p>
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black p-6">
+      {/* Subtle background accent */}
+      <div className="fixed inset-0 bg-[radial-gradient(#1E40AF_0.5px,transparent_1px)] dark:bg-[radial-gradient(#3B82F6_0.5px,transparent_1px)] [background-size:40px_40px] opacity-30 pointer-events-none" />
+
+      <div className="w-full max-w-md relative">
+        <div className="bg-white dark:bg-zinc-950 rounded-3xl shadow-2xl shadow-black/5 dark:shadow-white/5 p-10">
+          {/* Header */}
+          <div className="text-center mb-10">
+            
+            <h1 className="text-4xl font-semibold tracking-tight text-black dark:text-white mb-2">
+              Ghost Coach
+            </h1>
+            <p className="text-zinc-500 dark:text-zinc-400 text-lg">
+              Premium AI Sports Coaching
+            </p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                Email Address
+              </label>
+              <div className="relative group">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500">
+                  <User size={20} />
+                </div>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white 
+                           pl-12 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 
+                           focus:ring-royalblue text-[15px] placeholder-zinc-400 dark:placeholder-zinc-500
+                           transition-all duration-200"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                Password
+              </label>
+              <div className="relative group">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500">
+                  <Lock size={20} />
+                </div>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="w-full bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white 
+                           pl-12 pr-14 py-4 rounded-2xl focus:outline-none focus:ring-2 
+                           focus:ring-royalblue text-[15px] placeholder-zinc-400 dark:placeholder-zinc-500
+                           transition-all duration-200"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 dark:bg-red-950/50 text-red-600 dark:text-red-400 
+                            px-5 py-3 rounded-2xl text-sm font-medium border-l-4 border-red-500">
+                {error}
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-royalblue hover:bg-[#1E40AF] active:bg-[#1E3A8A] 
+                       text-white font-semibold py-4 rounded-2xl text-base
+                       transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed
+                       shadow-lg shadow-royalblue/30 dark:shadow-royalblue/20
+                       flex items-center justify-center"
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Signing in...
+                </div>
+              ) : (
+                'Sign In'
+              )}
+            </button>
+          </form>
+
+          {/* Register Link */}
+          <p className="text-center mt-8 text-sm text-zinc-500 dark:text-zinc-400">
+            Don't have an account?{' '}
+            <a 
+              href="/register" 
+              className="text-royalblue hover:text-[#1E40AF] font-medium transition-colors"
+            >
+              Create account
+            </a>
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">Email</label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 border border-input dark:border-input rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent bg-background dark:bg-background text-foreground dark:text-foreground"
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-foreground dark:text-foreground mb-2">Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground dark:text-muted-foreground" />
-              <input
-                type={showPassword ? 'text' : 'password'}
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-10 pr-12 py-3 border border-input dark:border-input rounded-lg focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:border-transparent bg-background dark:bg-background text-foreground dark:text-foreground"
-                placeholder="••••••••"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground dark:text-muted-foreground"
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
-            </div>
-          </div>
-
-          {error && (
-            <div className="p-3 bg-destructive/10 dark:bg-destructive/20 border border-destructive/30 dark:border-destructive/50 text-destructive dark:text-destructive rounded-lg text-sm">
-              {error}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-
-        <p className="text-center mt-6 text-muted-foreground dark:text-muted-foreground">
-          Don't have an account?{' '}
-          <a href="/register" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
-            Register
-          </a>
+        {/* Footer note */}
+        <p className="text-center text-xs text-zinc-400 dark:text-zinc-500 mt-6">
+          Secure login • Powered by Ghost Coach AI
         </p>
       </div>
     </div>
