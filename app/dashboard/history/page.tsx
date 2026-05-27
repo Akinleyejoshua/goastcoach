@@ -51,7 +51,7 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="max-w-full mx-auto px-4 sm:px-6">
+    <div className="">
       {/* Header */}
       <div className="mb-12">
         <div className="flex items-center gap-4 mb-4">
@@ -182,7 +182,7 @@ function SessionCard({ session, isExpanded, onToggle }: { session: Session; isEx
 
       {/* Expanded Feedback */}
       {isExpanded && (
-        <div className="border-t border-zinc-200 dark:border-zinc-800 px-8 pb-8">
+        <div className="border-t border-zinc-200 dark:border-zinc-800">
           <div className="pt-8">
             <FeedbackCard session={session} expanded />
           </div>
