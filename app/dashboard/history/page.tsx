@@ -51,7 +51,7 @@ export default function HistoryPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6">
+    <div className="max-w-full mx-auto px-4 sm:px-6">
       {/* Header */}
       <div className="mb-12">
         <div className="flex items-center gap-4 mb-4">

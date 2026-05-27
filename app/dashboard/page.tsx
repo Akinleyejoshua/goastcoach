@@ -152,7 +152,7 @@ export default function UploadPage() {
             </div>
           </div>
           
-          <div className="bg-white dark:bg-zinc-950 rounded-3xl p-10">
+          <div className="bg-white dark:bg-zinc-950 rounded-3xl p-1">
             <FeedbackCard session={sessions[0]} expanded />
           </div>
         </div>
